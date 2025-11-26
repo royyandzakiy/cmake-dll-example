@@ -5,6 +5,12 @@ A minimal example demonstrating how to create and use a DLL with CMake on Window
 ## Why is this interesting?
 `Real business case`: You want to create a library (.dll) that you will sell to different clients. You will ship the .dll as the end product, and clients will create their own custom applications while utilizing the library that you have created.
 
+## Key Concepts
+
+**Shared vs Static Libraries**: DLLs (shared) are loaded at runtime, allowing updates without recompiling dependent applications. Static libraries (.lib) are embedded into the executable during compilation.
+
+**C Wrapper & ABI Stability**: Using `extern "C"` prevents C++ name mangling, creating clean function names and stable ABI. This enables cross-language compatibility (Python, C#, Rust) and binary stability across compiler versions.
+
 ## Project Structure
 ```
 cmake-dll-example/
