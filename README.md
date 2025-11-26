@@ -1,0 +1,56 @@
+# CMake DLL Project
+
+A minimal example demonstrating how to create and use a DLL with CMake on Windows.
+
+## Project Structure
+```
+cmake-dll-example/
+├── CMakeLists.txt
+├── mylibrary/
+│   ├── CMakeLists.txt
+│   ├── mylibrary.h
+│   └── mylibrary.cpp
+└── myapp/
+    ├── CMakeLists.txt
+    └── main.cpp
+```
+
+## Building
+```bash
+cmake -B build && cmake --build build --config Release
+
+# Run
+build\bin\Release\myapp.exe
+```
+
+All binaries (DLL and EXE) will be output to `build/bin/`.
+
+## Library Generation Explained
+
+### Key Components for DLL Creation:
+
+1. **CMake**: `add_library(mylibrary SHARED ...)` creates a shared library (DLL on Windows)
+
+2. **Export Macro**: 
+   - `__declspec(dllexport)` when building the DLL
+   - `__declspec(dllimport)` when using the DLL
+
+3. **Header File Pattern**:
+```cpp
+#ifdef MYLIBRARY_EXPORTS
+#define MYLIBRARY_API __declspec(dllexport)
+#else
+#define MYLIBRARY_API __declspec(dllimport)
+#endif
+
+extern "C" {
+    MYLIBRARY_API int add_numbers(int a, int b);
+}
+```
+
+### How It Works:
+- The DLL project defines `MYLIBRARY_EXPORTS` which enables `__declspec(dllexport)`
+- Client code includes the same header but gets `__declspec(dllimport)`
+- CMake handles linking and ensures both DLL and EXE are built to the same directory
+
+The executable automatically loads the DLL at runtime when calling the exported functions.
