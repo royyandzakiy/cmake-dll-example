@@ -2,6 +2,9 @@
 
 A minimal example demonstrating how to create and use a DLL with CMake on Windows.
 
+## Why is this interesting?
+`Real business case`: You want to create a library (.dll) that you will sell to different clients. You will ship the .dll as the end product, and clients will create their own custom applications while utilizing the library that you have created.
+
 ## Project Structure
 ```
 cmake-dll-example/
